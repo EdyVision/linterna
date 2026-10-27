@@ -8,14 +8,28 @@ No accounts. Memories and recordings stay together in the local SQLite database.
 
 The demo uses synthetic speech, with real private speech inference and local storage.
 
+## Requirements
+
+- Python 3.11 or newer and `make`.
+- A current Chrome, Edge or Safari browser with microphone access.
+- FFmpeg is optional, recommended for seekable browser recordings. On macOS,
+  `brew install ffmpeg`; on Debian/Ubuntu, `sudo apt install ffmpeg`.
+- Node.js 22+ is needed only for the recorder tests, not to run the app.
+- A compatible speech endpoint is optional. Recording, local saving, manual
+  transcripts and original-voice playback work without one.
+
 ## Run
 
 ```sh
+git clone https://github.com/EdyVision/linterna.git
+cd linterna
 make install
 make start
 ```
 
 Open http://127.0.0.1:8787. Allow the microphone when you choose to record.
+Keep that terminal running; Ctrl+C stops the server. Use `make health` to check it.
+The first start creates `data/linterna.db` and `data/config.json` automatically.
 Use localhost or HTTPS; browsers restrict microphone access on insecure remote sites.
 
 ## Keep a memory
