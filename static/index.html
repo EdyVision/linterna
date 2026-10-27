@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Linterna</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/sky.css" />
+  </head>
+  <body>
+    <div class="sky" aria-hidden="true">
+      <div class="stars stars-a"></div>
+      <div class="stars stars-b"></div>
+      <div class="stars stars-c"></div>
+      <div class="bright-stars">
+        <span class="bright" style="--x:12%;--y:18%;--s:2.4"></span>
+        <span class="bright" style="--x:28%;--y:9%;--s:3.2"></span>
+        <span class="bright" style="--x:44%;--y:22%;--s:2.1"></span>
+        <span class="bright" style="--x:63%;--y:11%;--s:3.6"></span>
+        <span class="bright" style="--x:79%;--y:26%;--s:2.3"></span>
+        <span class="bright" style="--x:91%;--y:14%;--s:2.8"></span>
+        <span class="bright" style="--x:17%;--y:41%;--s:2"></span>
+        <span class="bright" style="--x:52%;--y:36%;--s:2.6"></span>
+        <span class="bright" style="--x:86%;--y:48%;--s:2.2"></span>
+      </div>
+      <span class="shooting-star ss-1"></span>
+      <span class="shooting-star ss-2"></span>
+      <span class="shooting-star ss-3"></span>
+      <div class="horizon"></div>
+      <span class="floating-lantern" style="--x:7%;--size:20px;--rise:99s;--delay:-42s;--alpha:0.16;--drift:36px;--sway:5s"><img src="/static/assets/lanterns/hero.png" alt="" draggable="false" /></span>
+      <span class="floating-lantern" style="--x:21%;--size:27px;--rise:86s;--delay:-65s;--alpha:0.2;--drift:-28px;--sway:6s"><img src="/static/assets/lanterns/hero.png" alt="" draggable="false" /></span>
+      <span class="floating-lantern" style="--x:38%;--size:17px;--rise:115s;--delay:-24s;--alpha:0.12;--drift:46px;--sway:7s"><img src="/static/assets/lanterns/hero.png" alt="" draggable="false" /></span>
+      <span class="floating-lantern" style="--x:53%;--size:24px;--rise:94s;--delay:-79s;--alpha:0.17;--drift:-30px;--sway:8s"><img src="/static/assets/lanterns/hero.png" alt="" draggable="false" /></span>
+      <span class="floating-lantern" style="--x:68%;--size:38px;--rise:79s;--delay:-22s;--alpha:0.3;--drift:44px;--sway:5s"><img src="/static/assets/lanterns/hero.png" alt="" draggable="false" /></span>
+      <span class="floating-lantern" style="--x:82%;--size:25px;--rise:105s;--delay:-70s;--alpha:0.24;--drift:-38px;--sway:6s"><img src="/static/assets/lanterns/hero.png" alt="" draggable="false" /></span>
+      <span class="floating-lantern" style="--x:94%;--size:54px;--rise:87s;--delay:-44s;--alpha:0.38;--drift:-62px;--sway:7s"><img src="/static/assets/lanterns/hero.png" alt="" draggable="false" /></span>
+      <span class="floating-lantern" style="--x:73%;--size:19px;--rise:111s;--delay:-55s;--alpha:0.16;--drift:26px;--sway:8s"><img src="/static/assets/lanterns/hero.png" alt="" draggable="false" /></span>
+      <span class="floating-lantern" style="--x:90%;--size:33px;--rise:96s;--delay:-12s;--alpha:0.27;--drift:28px;--sway:5s"><img src="/static/assets/lanterns/hero.png" alt="" draggable="false" /></span>
+      <span class="floating-lantern" style="--x:60%;--size:15px;--rise:122s;--delay:-97s;--alpha:0.13;--drift:-30px;--sway:6s"><img src="/static/assets/lanterns/hero.png" alt="" draggable="false" /></span>
+    </div>
+
+    <header class="top">
+      <h1>Linterna</h1>
+      <button type="button" id="btn-setup" class="ghost icon-btn" aria-label="Config" title="Config">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path>
+        </svg>
+      </button>
+    </header>
+
+    <main class="stage">
+      <section class="altar" aria-label="Memories">
+        <form id="search-form" class="search-form" role="search">
+          <label class="sr-only" for="search-q">Find a story</label>
+          <input
+            id="search-q"
+            type="search"
+            placeholder="Find by topic…"
+            autocomplete="off"
+          />
+          <button type="submit" class="ghost">Search</button>
+        </form>
+        <div class="browse-bar">
+          <button type="button" id="btn-clear-filters" class="ghost tiny hidden">Clear filters</button>
+          <p id="browse-label" class="browse-label"></p>
+        </div>
+        <p class="hint" id="empty-hint">No memories yet. Press the linterna to speak one.</p>
+        <div id="memory-tree" class="memory-tree"></div>
+        <ul id="search-results" class="memory-list hidden"></ul>
+      </section>
+
+      <section class="focus">
+        <div id="draft" class="draft glass hidden">
+          <label for="transcript">Transcript</label>
+          <textarea id="transcript" rows="5" placeholder="Your words appear here…"></textarea>
+          <audio id="draft-audio" class="hidden" controls preload="metadata" aria-label="Preview your recording"></audio>
+          <div class="draft-actions">
+            <button type="button" id="btn-transcribe" class="ghost">Transcribe</button>
+            <button type="button" id="btn-discard" class="ghost">Discard</button>
+            <button type="button" id="btn-save" class="primary">Save memory</button>
+          </div>
+        </div>
+
+        <div id="playback" class="playback glass hidden">
+          <h2 id="playback-title"></h2>
+          <p id="playback-text"></p>
+          <audio id="original-audio" class="hidden" controls preload="metadata" aria-label="Original memory recording"></audio>
+          <div class="draft-actions">
+            <button type="button" id="btn-play" class="primary">Play story</button>
+            <button type="button" id="btn-read" class="ghost hidden">Read transcript</button>
+            <button type="button" id="btn-stop" class="ghost">Stop</button>
+            <button type="button" id="btn-delete" class="ghost danger">Delete</button>
+          </div>
+        </div>
+
+        <div class="lantern-wrap">
+          <button type="button" id="lantern" class="lantern" aria-pressed="false" aria-label="Record a memory. Tap to start or stop, or press and hold.">
+            <img
+              class="lantern-art idle"
+              src="/static/assets/lanterns/hero.png"
+              alt=""
+              draggable="false"
+            />
+            <img
+              class="lantern-art active"
+              src="/static/assets/lanterns/hero-glow.png"
+              alt=""
+              draggable="false"
+            />
+          </button>
+          <p class="lantern-hint" id="lantern-label">Tap to record · tap again to finish · or press and hold</p>
+          <p id="status" class="status" role="status"></p>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="setup-dialog">
+      <form method="dialog" id="setup-form">
+        <h2>Config</h2>
+        <p class="dialog-copy">Your voice is saved on this computer. Configured speech services receive audio for transcription or text for narration. Without ASR, browser captions may use your browser’s speech service.</p>
+        <label>Chat base URL <input name="chat_base_url" type="url" placeholder="https://api.openai.com/v1" /></label>
+        <label>Chat model <input name="chat_model" type="text" placeholder="Qwen/Qwen2.5-7B-Instruct" /></label>
+        <label>TTS base URL <input name="tts_base_url" type="url" placeholder="http://127.0.0.1:8080/v1" /></label>
+        <label>TTS model <input name="tts_model" type="text" placeholder="magpie-tts" /></label>
+        <label>TTS voice <input name="tts_voice" type="text" placeholder="Sofia" /></label>
+        <label>ASR base URL <input name="asr_base_url" type="url" placeholder="https://api.openai.com/v1/audio/transcriptions" /></label>
+        <label>ASR model <input name="asr_model" type="text" placeholder="whisper-1" /></label>
+        <div class="draft-actions">
+          <button type="submit" value="cancel" class="ghost">Close</button>
+          <button type="submit" value="save" class="primary">Save</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="/static/main.js"></script>
+  </body>
+</html>

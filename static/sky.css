@@ -1,0 +1,89 @@
+.floating-lantern {
+  position: absolute;
+  top: calc(100% + 100px);
+  left: var(--x);
+  width: var(--size);
+  aspect-ratio: 1;
+  opacity: 0;
+  mix-blend-mode: screen;
+  animation: lantern-ascent var(--rise) linear var(--delay) infinite;
+}
+.floating-lantern img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: lantern-sway var(--sway) ease-in-out infinite alternate;
+  transform-origin: 50% 85%;
+}
+.floating-lantern::after {
+  content: '';
+  position: absolute;
+  inset: 18% -20% -20%;
+  background: radial-gradient(ellipse at 50% 70%, #ffc66d30, transparent 65%);
+  animation: ember-breathe 4s ease-in-out infinite alternate;
+}
+@keyframes lantern-ascent {
+  0% { opacity: 0; transform: translate3d(0, 0, 0); }
+  10% { opacity: var(--alpha); }
+  84% { opacity: var(--alpha); }
+  100% { opacity: 0; transform: translate3d(var(--drift), calc(-100vh - 240px), 0); }
+}
+@keyframes lantern-sway {
+  from { transform: translateX(-4px) rotate(-5deg); }
+  to { transform: translateX(4px) rotate(5deg); }
+}
+@keyframes ember-breathe { from { opacity: .4; } to { opacity: .85; } }
+.shooting-star {
+  position: absolute;
+  left: var(--start-x);
+  top: var(--start-y);
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #eff7ff;
+  opacity: 0;
+  animation: meteor var(--period) linear var(--wait) infinite;
+}
+.shooting-star::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .5px;
+  height: 1px;
+  width: var(--tail);
+  background: linear-gradient(90deg, #eef7ffb0, #bcdcff30 35%, transparent);
+  transform-origin: left center;
+}
+.ss-1 { --start-x: 86%; --start-y: 8%; --period: 21s; --wait: -17s; --tail: 100px; }
+.ss-2 { --start-x: 97%; --start-y: 27%; --period: 31s; --wait: -5s; --tail: 76px; }
+.ss-3 { --start-x: 57%; --start-y: 3%; --period: 43s; --wait: -29s; --tail: 85px; }
+@keyframes meteor {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-31deg); }
+  .5% { opacity: .8; }
+  2.8% { opacity: .65; }
+  4%, 100% { opacity: 0; transform: translate3d(-480px, 288px, 0) rotate(-31deg); }
+}
+.lantern { touch-action: none; -webkit-user-select: none; user-select: none; animation: lantern-rest 7s ease-in-out infinite; }
+@keyframes lantern-rest {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-1deg); }
+  50% { transform: translate3d(0, -12px, 0) rotate(1.3deg); }
+}
+audio { width: 100%; max-width: 100%; height: 38px; color-scheme: dark; }
+button:disabled { cursor: wait; opacity: .55; }
+.lantern:focus-visible { outline: 2px solid var(--gold); outline-offset: -30px; border-radius: 30%; }
+:root[data-paused] .sky *, :root[data-paused] .lantern { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .shooting-star { display: none; }
+  .floating-lantern { top: 20%; opacity: calc(var(--alpha) * .65); }
+}
+@media (max-width: 800px) {
+  .stage { display: flex; flex-direction: column-reverse; }
+  .focus { min-height: 420px; padding-bottom: 12px; }
+  .lantern-wrap { width: min(320px, 80vw); }
+  .draft, .playback { position: relative; left: auto; top: auto; transform: none; order: 1; width: 100%; }
+  .focus:has(.draft:not(.hidden)), .focus:has(.playback:not(.hidden)) { justify-content: flex-start; }
+  .focus:has(.draft:not(.hidden)) .lantern-wrap, .focus:has(.playback:not(.hidden)) .lantern-wrap { width: min(220px, 60vw); }
+  .altar { padding: 0; }
+}
